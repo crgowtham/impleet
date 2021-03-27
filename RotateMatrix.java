@@ -13,6 +13,10 @@ Output: [[7,4,1],[8,5,2],[9,6,3]]
 
 The most elegant solution for rotating the matrix is to firstly reverse the matrix around the main diagonal, and then reverse it from left to right.
 These operations are called transpose and reflect in linear algebra.
+
+
+The most elegant solution for rotating the matrix is to firstly reverse the matrix around the main diagonal,
+and then reverse it from left to right. These operations are called transpose and reflect in linear algebra.
 */
 
 class Solution {
