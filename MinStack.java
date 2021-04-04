@@ -34,58 +34,29 @@ Methods pop, top and getMin operations will always be called on non-empty stacks
 
 
 class MinStack {
-
-    private Stack<Integer> stack = new Stack<>();
-    private Stack<int[]> minStack = new Stack<>();
-    
-    
-    public MinStack() { }
-    
-    
+    int min = Integer.MAX_VALUE;
+    Stack<Integer> stack = new Stack<Integer>();
     public void push(int x) {
-        
-        // We always put the number onto the main stack.
+        // only push the old minimum value when the current 
+        // minimum value changes after pushing the new value x
+        if(x <= min){          
+            stack.push(min);
+            min=x;
+        }
         stack.push(x);
-        
-        // If the min stack is empty, or this number is smaller than
-        // the top of the min stack, put it on with a count of 1.
-        if (minStack.isEmpty() || x < minStack.peek()[0]) {
-            minStack.push(new int[]{x, 1});
-        }
-        
-        // Else if this number is equal to what's currently at the top
-        // of the min stack, then increment the count at the top by 1.
-        else if (x == minStack.peek()[0]) {
-            minStack.peek()[1]++;
-        }
     }
-    
-    
+
     public void pop() {
-        
-        // If the top of min stack is the same as the top of stack
-        // then we need to decrement the count at the top by 1.
-        if (stack.peek().equals(minStack.peek()[0])) {
-            minStack.peek()[1]--;
-        }
-        
-        // If the count at the top of min stack is now 0, then remove
-        // that value as we're done with it.
-        if (minStack.peek()[1] == 0) {
-            minStack.pop();
-        }
-        
-        // And like before, pop the top of the main stack.
-        stack.pop();
+        // if pop operation could result in the changing of the current minimum value, 
+        // pop twice and change the current minimum value to the last minimum value.
+        if(stack.pop() == min) min=stack.pop();
     }
-    
-    
+
     public int top() {
         return stack.peek();
     }
 
-    
     public int getMin() {
-        return minStack.peek()[0];
+        return min;
     }
 }
